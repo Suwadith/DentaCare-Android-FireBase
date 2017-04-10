@@ -3,6 +3,7 @@ package com.example.suwadith.dentacare_firebase;
 import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,7 +13,6 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
 
     private EditText editEmail;
     private EditText editPassword;
-    private EditText editConfirmPassword;
     private Button registerButton;
     private TextView loginRedirect;
 
@@ -23,7 +23,6 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
 
         editEmail = (EditText) findViewById(R.id.editEmail);
         editPassword = (EditText) findViewById(R.id.editPassword);
-        editConfirmPassword = (EditText) findViewById(R.id.editConfirmPassword);
 
         registerButton = (Button) findViewById(R.id.registerButton);
 
@@ -35,6 +34,18 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
     }
 
     private void registerNewUser(){
+
+        String email = editEmail.getText().toString().trim();
+        String password = editPassword.getText().toString().trim();
+
+
+            if(TextUtils.isEmpty(email)){
+
+            }
+
+            if(TextUtils.isEmpty(password)){
+
+            }
 
     }
 
