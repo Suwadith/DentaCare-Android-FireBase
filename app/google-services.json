@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "298849725681",
+    "firebase_url": "https://dentacare-a68d7.firebaseio.com",
+    "project_id": "dentacare-a68d7",
+    "storage_bucket": "dentacare-a68d7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:298849725681:android:7e571bc1dfe51055",
+        "android_client_info": {
+          "package_name": "com.example.suwadith.dentacare_firebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "298849725681-vvmruobkhamn29e3hola6eortab62dej.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnV0pJ83n6NQO77w_ytDLW7DAVdv0zYs0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
