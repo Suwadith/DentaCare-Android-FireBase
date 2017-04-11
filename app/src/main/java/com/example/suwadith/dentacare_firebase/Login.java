@@ -1,7 +1,6 @@
 package com.example.suwadith.dentacare_firebase;
 
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -10,7 +9,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,12 +17,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class Registration extends AppCompatActivity implements View.OnClickListener{
+public class Login extends AppCompatActivity implements View.OnClickListener{
 
     private EditText editEmail;
     private EditText editPassword;
-    private Button registerButton;
-    private TextView loginRedirect;
+    private Button loginButton;
+    private TextView registerRedirect;
 
     private ProgressDialog progressDialog;
 
@@ -33,29 +31,32 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registration);
+        setContentView(R.layout.activity_login);
 
         firebaseAuth = FirebaseAuth.getInstance();
+
+        if(firebaseAuth.getCurrentUser() != null){
+
+        }
 
         progressDialog = new ProgressDialog(this);
 
         editEmail = (EditText) findViewById(R.id.editEmail);
         editPassword = (EditText) findViewById(R.id.editPassword);
 
-        registerButton = (Button) findViewById(R.id.registerButton);
+        loginButton = (Button) findViewById(R.id.loginButton);
 
-        loginRedirect = (TextView) findViewById(R.id.loginRedirect);
+        registerRedirect = (TextView) findViewById(R.id.registerRedirect);
 
-        registerButton.setOnClickListener(this);
-        loginRedirect.setOnClickListener(this);
+        loginButton.setOnClickListener(this);
+        registerRedirect.setOnClickListener(this);
 
     }
 
-    private void registerNewUser() {
+    private void loginUser() {
 
         String email = editEmail.getText().toString().trim();
         String password = editPassword.getText().toString().trim();
-
 
         if (TextUtils.isEmpty(email)) {
             Toast.makeText(this, "Please enter a valid email address", Toast.LENGTH_SHORT).show();
@@ -70,35 +71,38 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
         progressDialog.setMessage("In Progress...");
         progressDialog.show();
 
-        firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+        firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                progressDialog.dismiss();
                 if(task.isSuccessful()){
-                    Toast.makeText(Registration.this, "User Registered", Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
+                    Toast.makeText(Login.this, "User Logged In", Toast.LENGTH_SHORT).show();
                 }else{
-                    Toast.makeText(Registration.this, "Registration Unsuccessful", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Login.this, "Login Unsuccessful", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
+
+
     }
 
-    private void redirectToLogin(){
+    private void redirectToRegister() {
         finish();
-        startActivity(new Intent(this, Login.class));
+        startActivity(new Intent(this, Registration.class));
     }
 
     @Override
     public void onClick(View view) {
 
-        if(view == registerButton){
-            registerNewUser();
+        if(view == loginButton){
+            loginUser();
         }
 
-        if(view == loginRedirect){
-            redirectToLogin();
+        if(view == registerRedirect){
+            redirectToRegister();
         }
 
     }
+
 }
