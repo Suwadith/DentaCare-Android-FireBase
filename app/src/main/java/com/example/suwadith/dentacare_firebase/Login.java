@@ -36,7 +36,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
         firebaseAuth = FirebaseAuth.getInstance();
 
         if(firebaseAuth.getCurrentUser() != null){
-
+            //Already Logged In
         }
 
         progressDialog = new ProgressDialog(this);
@@ -74,9 +74,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
         firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
+                progressDialog.dismiss();
                 if(task.isSuccessful()){
-                    progressDialog.dismiss();
                     Toast.makeText(Login.this, "User Logged In", Toast.LENGTH_SHORT).show();
+                    //Move on inside
                 }else{
                     Toast.makeText(Login.this, "Login Unsuccessful", Toast.LENGTH_SHORT).show();
                 }
