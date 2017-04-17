@@ -37,6 +37,11 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
 
         firebaseAuth = FirebaseAuth.getInstance();
 
+        if(firebaseAuth.getCurrentUser() != null){
+            finish();
+            startActivity(new Intent(getApplicationContext(), UserProfile.class));
+        }
+
         progressDialog = new ProgressDialog(this);
 
         editEmail = (EditText) findViewById(R.id.editEmail);
@@ -76,6 +81,8 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                 progressDialog.dismiss();
                 if(task.isSuccessful()){
                     Toast.makeText(Registration.this, "User Registered", Toast.LENGTH_SHORT).show();
+                        finish();
+                        startActivity(new Intent(getApplicationContext(), UserProfile.class));
                 }else{
                     Toast.makeText(Registration.this, "Registration Unsuccessful", Toast.LENGTH_SHORT).show();
                 }
