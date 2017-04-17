@@ -22,30 +22,39 @@ public class UserProfile extends AppCompatActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
 
+        //Initialization of the FirebaseAuth Object
         firebaseAuth = FirebaseAuth.getInstance().getInstance();
 
+        //Checking whether a user as already Logged In
         if(firebaseAuth.getCurrentUser()==null){
             finish();
+            //Starting the User Login Activity if the user is not Logged in
             startActivity(new Intent(this, Login.class));
         }
 
         FirebaseUser user = firebaseAuth.getCurrentUser();
 
+        //Retrieving EditText field values from the XML and storing them in java Variables
         userEmail = (TextView) findViewById(R.id.userEmail);
 
+        //Setting the userEmail field text to show the logged in user's email ID
         userEmail.setText("Email: " +user.getEmail());
 
         userEmail = (TextView) findViewById(R.id.userEmail);
         logoutButton = (Button) findViewById(R.id.logoutButton);
 
+        //Adding the listener function to the logout Button
         logoutButton.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
+        //when logoutButton is clicked logoutButton method is invoked
         if(view == logoutButton){
+            //Signs out the current logged in user
             firebaseAuth.signOut();
             finish();
+            //Switches to login Activity
             startActivity(new Intent(this, Login.class));
         }
     }

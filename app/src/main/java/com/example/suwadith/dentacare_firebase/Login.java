@@ -33,15 +33,20 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        //Initialization of the FirebaseAuth Object
         firebaseAuth = FirebaseAuth.getInstance();
 
+        //Checking whether a user as already Logged In
         if(firebaseAuth.getCurrentUser() != null){
             finish();
+            //Starting the User Profile Activity if the user is already Logged in
             startActivity(new Intent(getApplicationContext(), UserProfile.class));
         }
 
+        //Initialization of the ProgressDialog object
         progressDialog = new ProgressDialog(this);
 
+        //Retrieving EditText field values from the XML and storing them in java Variables
         editEmail = (EditText) findViewById(R.id.editEmail);
         editPassword = (EditText) findViewById(R.id.editPassword);
 
@@ -49,6 +54,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
 
         registerRedirect = (TextView) findViewById(R.id.registerRedirect);
 
+        //Adding the listener function to both the login button and the register redirection link (Text)
         loginButton.setOnClickListener(this);
         registerRedirect.setOnClickListener(this);
 
@@ -56,31 +62,45 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
 
     private void loginUser() {
 
+        //Converting EditText type variables to String type variables
         String email = editEmail.getText().toString().trim();
         String password = editPassword.getText().toString().trim();
 
+        //Checking whether the email field is empty and displaying a error message through Toast
         if (TextUtils.isEmpty(email)) {
             Toast.makeText(this, "Please enter a valid email address", Toast.LENGTH_SHORT).show();
             return;
         }
 
+        //Checking whether the password field is empty and displaying a error message through Toast
         if (TextUtils.isEmpty(password)) {
             Toast.makeText(this, "Please enter a preferred password", Toast.LENGTH_SHORT).show();
             return;
         }
 
+        //Giving the ProgressDialog a message to display while the action in is progress
         progressDialog.setMessage("In Progress...");
+        //Displaying the ProgressDialog
         progressDialog.show();
 
+        /**
+         *
+         * @param email user email
+         * @param password user password
+         */
         firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 progressDialog.dismiss();
+                //checks whether the user has been successfully logged in
                 if(task.isSuccessful()){
+                    //Displays a login successful message through Toast
                     Toast.makeText(Login.this, "User Logged In", Toast.LENGTH_SHORT).show();
                     finish();
+                    //Redirects to the User Profile Activity
                     startActivity(new Intent(getApplicationContext(), UserProfile.class));
                 }else{
+                    //Displays a login Unsuccessful message through Toast
                     Toast.makeText(Login.this, "Login Unsuccessful", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -90,18 +110,22 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
 
     }
 
+    //Method to switch from Login page to the Registration Page
     private void redirectToRegister() {
         finish();
+        //starts the Registration Activity
         startActivity(new Intent(this, Registration.class));
     }
 
     @Override
     public void onClick(View view) {
 
+        //when loginButton is clicked loginUser method is invoked
         if(view == loginButton){
             loginUser();
         }
 
+        //when registerRedirect is clicked redirectToRegister method is invoked
         if(view == registerRedirect){
             redirectToRegister();
         }
